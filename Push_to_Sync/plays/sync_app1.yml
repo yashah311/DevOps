@@ -1,9 +1,9 @@
-# sync_fmw.yml
+# sync_app1.yml
 
 ---
-   - hosts: ALLFMW
+   - hosts: ALLAPP1
      vars:
-        - folders_path: /opt/oracle/teams/TA/folders
+        - folders_path: /opt/workspace/folders
      tasks:
      -  name: Creating folders
         file:
@@ -47,4 +47,4 @@
 
 # Custom scripts can be called below
      #-  name: Performing housekeeping
-     #   shell: sh /opt/oracle/teams/TA/ys/folders/CommonScripts/housekeeping.sh             
+     #   shell: sh /opt/workspace/folders/CommonScripts/housekeeping.sh             
