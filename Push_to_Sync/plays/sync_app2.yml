@@ -1,0 +1,54 @@
+# sync_coh.yml
+
+---
+   - hosts: ALLCOH
+     vars:
+        - folder_path: /opt/rigcache/application/rig-authorisation/ops
+        - home_path: /home/rigcache
+     tasks:
+     -  name: Creating folder
+        file:
+          path: "{{ folder_path }}"
+          state: directory
+
+     -  name: Creating soft link
+        file:
+          dest: $HOME/ops
+          src: "{{ folder_path }}"
+          state: link
+
+     -  name: Synchronizing folders
+        remote_user: rigcache
+        synchronize: 
+          src: ../folders/ops/ 
+          dest: "{{ folder_path }}"
+          #delete: yes
+          recursive: true
+     
+     -  name: Change file ownership, group and permissions
+        file:
+          path: "{{ folder_path }}"
+          state: directory
+          recurse: yes
+          owner: rigcache
+          group: rigcache
+          mode: '0755'
+
+#  Custom synchronization
+     -  name: Synchronizing single file
+        become: yes
+        copy:
+          dest: /etc/ssh/my_banner
+          src: ../files/motd_coh
+     -  name: Synchronizing multiple files
+        copy: 
+          dest: "{{ home_path }}"
+          src: ../files/{{ item }}
+        with_items:
+          - .display_coh
+          - .alias
+     -  name: Renaming file
+        command: cp "{{ home_path }}"/.display_coh "{{ home_path }}"/.display
+     -  name: Activating changes 
+        shell: source "{{ home_path }}"/.bashrc
+                 

@@ -1,0 +1,133 @@
+# .alias
+
+# Source global definitions
+export PLATFORM_HOME=/opt/oracle/fmw-platform
+export DOMAIN_HOME=/opt/oracle/domains
+export COHERENCE_HOME=/opt/rigcache/application/rig-authorisation
+export FOLDER_HOME=/opt/oracle/teams/TA/folders
+
+# User specific aliases and functions
+alias perform="sh ${FOLDER_HOME}/CommonScripts/perform.sh"
+alias gitloc="cd /opt/oracle/workspace/Sourcecode/VFUK_FMW"
+alias m="cat ~/.display"
+alias go="ssh -t"
+alias c="clear"
+alias g='function _g(){ grep -ir $1 .; };_g'
+alias fr='function _fr(){ grep -lr "$1" . | xargs -I {} sed -i -e "s#$1#$2#gI" {}; };_fr'
+
+###Sqlplus Client###
+export ORACLE_HOME=/usr/lib/oracle/21/client64
+export LD_LIBRARY_PATH=${ORACLE_HOME}/lib
+export PATH=${ORACLE_HOME}/bin:$PATH
+
+#####################################################################################################################################
+# Alias for Scripts
+#####################################################################################################################################
+alias startenv="perform start all"
+alias stopenv="perform stop all"
+alias startaabc="perform start aabc"
+alias stopaabc="perform stop aabc"
+alias starto2c="perform start o2c"
+alias stopo2c="perform stop o2c"
+alias startosb="perform start osb"
+alias stoposb="perform stop osb"
+alias startodi="perform start odi"
+alias stopodi="perform stop odi"
+alias startcod="perform start cod"
+alias stopcod="perform stop cod"
+alias cleanrestartaabc="perform clean_restart aabc"
+alias cleanrestarto2c="perform clean_restart o2c"
+alias cleanrestartosb="perform clean_restart osb"
+alias cleanrestartodi="perform clean_restart odi"
+alias cleanrestartcod="perform clean_restart cod"
+
+#####################################################################################################################################
+# Alias for Operations
+#####################################################################################################################################
+alias search='function _search(){ grep -ir $1 $DOMAIN_HOME/osb-domain/osb-domain/NewCoLogs; };_search'
+alias statusrig="cd $DOMAIN_HOME/services/rig-proxy/bin && docker-compose ps"
+alias startrig="cd $DOMAIN_HOME/services/rig-proxy/bin && docker-compose up -d"
+alias stoprig="cd $DOMAIN_HOME/services/rig-proxy/bin && docker-compose down"
+alias performjca="platformw runtime wlst aabc-domain --exec /u01/oracle/domains/shared/scripts/JCA_tgt_untgt_aabc.py && platformw runtime wlst o2c-domain --exec /u01/oracle/domains/shared/scripts/JCA_tgt_untgt_o2c.py"
+alias performspm="sh $FOLDER_HOME/CommonScripts/spm.sh"
+alias purgejfr="sh $FOLDER_HOME/CommonScripts/purge_jfr.sh"
+alias purgeresq="sh $FOLDER_HOME/CommonScripts/purge_resq.sh"
+alias verifypoller="ps -eaf|grep Poller"
+alias checkhc="platformw runtime status --env -q && df -kh|grep oracle && df -kh|grep docker && platformw component spm status aabc-domain -q && platformw component spm status aabc-domain --host-id SEBL_ZD -q && platformw component spm status o2c-domain -q && ps -eaf|grep Poller"
+alias mailmonreport="sh $FOLDER_HOME/mon/bin/master_monitor.sh" 
+alias restartpoller="platformw runtime shell osb-domain --exec "/u01/oracle/domains/shared/scripts/restart_poller.sh""
+alias increaseseq="sh $FOLDER_HOME/CommonScripts/increase_seq.sh"
+alias truncateaiaaggregator='sh /opt/oracle/teams/TA/folders/CommonScripts/truncate_aia_aggregated_entities.sh'
+
+#####################################################################################################################################
+# Alias for Logs
+#####################################################################################################################################
+alias osb1logs="cd $DOMAIN_HOME/osb-domain/osb-domain/servers/osb_server1/logs"
+alias osb2logs="cd $DOMAIN_HOME/osb-domain/osb-domain/servers/osb_server2/logs"
+alias osblogs="cd $DOMAIN_HOME/osb-domain/osb-domain/servers/AdminServer/logs"
+alias aabc1logs="cd $DOMAIN_HOME/aabc-domain/aabc-domain/servers/soa_server1/logs"
+alias aabc2logs="cd $DOMAIN_HOME/aabc-domain/aabc-domain/servers/soa_server2/logs"
+alias aabclogs="cd $DOMAIN_HOME/aabc-domain/aabc-domain/servers/AdminServer/logs"
+alias o2c1logs="cd $DOMAIN_HOME/o2c-domain/o2c-domain/servers/soa_server1/logs"
+alias o2c2logs="cd $DOMAIN_HOME/o2c-domain/o2c-domain/servers/soa_server2/logs"
+alias o2clogs="cd $DOMAIN_HOME/o2c-domain/o2c-domain/servers/AdminServer/logs"
+alias odi1logs="cd $DOMAIN_HOME/odi-domain/odi-domain/servers/odi_server1/logs"
+alias odi2logs="cd $DOMAIN_HOME/odi-domain/odi-domain/servers/odi_server2/logs"
+alias odilogs="cd $DOMAIN_HOME/odi-domain/odi-domain/servers/AdminServer/logs"
+alias cod1logs="cd $DOMAIN_HOME/cod-domain/cod-domain/servers/odi_server1/logs"
+alias cod2logs="cd $DOMAIN_HOME/cod-domain/cod-domain/servers/odi_server2/logs"
+alias codlogs="cd $DOMAIN_HOME/cod-domain/cod-domain/servers/AdminServer/logs"
+
+#####################################################################################################################################
+# Alias for Directories
+#####################################################################################################################################
+alias osbdomain="cd $DOMAIN_HOME/osb-domain"
+alias aabcdomain="cd $DOMAIN_HOME/aabc-domain"
+alias o2cdomain="cd $DOMAIN_HOME/o2c-domain"
+alias odidomain="cd $DOMAIN_HOME/odi-domain"
+alias coddomain="cd $DOMAIN_HOME/cod-domain"
+alias configdir="cd $PLATFORM_HOME/config/"
+alias newcologs="cd $DOMAIN_HOME/osb-domain/osb-domain/NewCoLogs"
+alias rigloc="cd $DOMAIN_HOME/services/rig-proxy/bin"
+
+#####################################################################################################################################
+# Alias for WCC
+#####################################################################################################################################
+alias ovdloc="cd /opt/ucm/ovd/oracle/product/asinst_1/bin"
+alias statusovd="cd /opt/ucm/ovd/oracle/product/asinst_1/bin && ./opmnctl status -l"
+alias startovd="cd /opt/ucm/ovd/oracle/product/asinst_1/bin && ./opmnctl start"
+alias stopovd="cd /opt/ucm/ovd/oracle/product/asinst_1/bin && ./opmnctl stop"
+alias mwhome="cd /opt/ucm/u01/app/oracle/product/12C/"
+alias mwlogs="cd /opt/ucm/u01/app/oracle/product/LOGS"
+alias domhome="cd /opt/ucm/u01/app/oracle/product/12C/user_projects"
+alias ecmdomain="cd /opt/ucm/u01/app/oracle/product/12C/user_projects/domains/ecm_domain"
+alias mwtascripts="cd /opt/ucm/u01/app/oracle/product/TA/SCRIPTS"
+alias statusdomain="sh /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/WCC_OPS/statusECMdomain.sh"
+alias startadmin='cd /opt/ucm/u01/app/oracle/product/12C/user_projects/domains/ecm_domain; ./startWebLogic.sh > /opt/ucm/u01/app/oracle/product/12C/user_projects/domains/ecm_domain/startECMAdmin.log 2>&1'
+alias stopadmin='cd /opt/ucm/u01/app/oracle/product/12C/user_projects/domains/ecm_domain/bin; ./stopWebLogic.sh > /opt/ucm/u01/app/oracle/product/12C/user_projects/domains/ecm_domain/bin/stopECMAdmin.log 2>&1'
+alias startdomain='cd /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/ECM; ./startDomain.sh > /opt/ucm/u01/app/oracle/product/LOGS/ECM/startECMDomain.log 2>&1'
+alias stopdomain='cd /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/ECM; ./stopDomain.sh > /opt/ucm/u01/app/oracle/product/LOGS/ECM/stopECMDomain.log 2>&1'
+alias startEMNodeManager='cd /opt/ucm/u01/app/oracle/product/12C/wlserver/server/bin; nohup ./startNodeManager.sh & > /opt/ucm/u01/app/oracle/product/LOGS/ECM/startECMNodeManag.log 2>&1'
+alias startohs='cd /opt/SP/oracle/WCCOHS_Domain/bin; ./start_ohs.sh'
+alias stopohs='cd /opt/SP/oracle/WCCOHS_Domain/bin; ./stop_ohs.sh'
+#alias checkOhsInstances='cd /opt/ucm/u01/app/oracle/product/TA/SCRIPTS; ./checkOhsInstances.sh'
+#alias wthome="cd /opt/ucm/u01/app/oracle/product/12C/ohs"
+#alias wtinstances="cd /opt/ucm/u01/app/oracle/product/12C/ohs/instances"
+alias statusohs='sh /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/WCC_OPS/statusohs.sh'
+alias startohs='sh /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/WCC_OPS/startohs.sh'
+alias stopohs='sh /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/WCC_OPS/stopohs.sh'
+
+#####################################################################################################################################
+# Alias for Coherence
+#####################################################################################################################################
+alias cohloc="cd $COHERENCE_HOME/bin"
+alias cohlog="cd /var/rigcache/logs"
+alias opsloc="cd /opt/rigcache/application/rig-authorisation/ops"
+alias runsync="cd /opt/rigcache/application/rig-authorisation/bin && yes | ./rigauth-sync-tool.sh default"
+alias startcoh="cd /opt/rigcache/application/rig-authorisation/bin && yes | ./rigauth-cluster-control.sh start"
+alias stopcoh="cd /opt/rigcache/application/rig-authorisation/bin && yes | ./rigauth-cluster-control.sh stop"
+alias statuscoh="cd /opt/rigcache/application/rig-authorisation/ops/ && ./coherence_ops.sh HC"
+alias accountsize="cd /opt/rigcache/application/rig-authorisation/bin && yes | ./rigauth-operations.sh size account"
+alias assetsize="cd /opt/rigcache/application/rig-authorisation/bin && yes | ./rigauth-operations.sh size asset"
+alias adddata="cd /opt/rigcache/application/rig-authorisation/ops/ && ./coherence_ops.sh add"
+alias purgelogs="find /var/rigcache/logs -mtime +2 -type f -delete"

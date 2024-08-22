@@ -1,0 +1,50 @@
+# sync_wcc.yml
+
+---
+   - hosts: WCC
+     vars:
+        - folder_path: /opt/ucm/u01/app/oracle/product/TA/SCRIPTS/WCC_OPS
+     tasks:
+     -  name: Creating folder
+        file:
+          path: "{{ folder_path }}"
+          state: directory
+
+     -  name: Creating soft link
+        file:
+          dest: $HOME/wccops
+          src: "{{ folder_path }}"
+          state: link
+   
+     -  name: Synchronizing folders
+        synchronize: 
+          src: ../folders/wccops/ 
+          dest: "{{ folder_path }}" 
+          delete: yes
+          recursive: true
+          
+     -  name: Decrypt and copy folders
+        copy:
+          src: ../folders/wccops/
+          dest: "{{ folder_path }}"
+          decrypt: yes
+          
+#  Custom synchronization
+     -  name: Synchronizing single file
+        become: yes
+        copy:
+          dest: /etc/motd
+          src: ../files/motd_wcc
+     -  name: Synchronizing multiple files
+        copy: 
+          dest: $HOME
+          src: ../files/{{ item }}
+        with_items:
+          - .display_wcc
+          - .alias
+          - .bashrc
+     -  name: Renaming file
+        command: cp $HOME/.display_wcc $HOME/.display
+     -  name: Activating changes 
+        shell: source $HOME/.bashrc
+                  

@@ -1,0 +1,23 @@
+ _________________________________________________________________________________________________________________________________
+|               SCRIPTS                                  |                          OPERATE                                       |
+| statusdomain         -->     To Check Domain Status    |                                                                        |
+| startadmin           -->     To start ECM Admin        |     statusovd            -->     To Check OVD status                   |
+| stopadmin            -->     To stop  ECM Admin        |     startovd             -->     To Start OVD                          |
+| startdomain          -->     To start ECM Mng Server   |     stopovd              -->     To stop OVD                           |
+| stopdomain           -->     To stop  ECM Mng Server   |     checkOhsInstances    -->     To Check OhsInstances                 |
+| startEMNodeManager   -->     To start ECMNodeManager   |     statusohs            -->     To Check ohs status                   |
+|                                                        |     startohs             -->     To Start ohs                          |
+|                                                        |     stopohs              -->     To Stop ohs                           |
+|________________________________________________________|________________________________________________________________________|
+|                LOGS                                    |                      DIRECTORIES                                       |
+| mwlogs               -->           Check WCC logs      |     ecmdomain           -->      ECM Domain home directory             |
+|                                                        |     ovdloc              -->      OVD Home directory                    |
+|                                                        |     wthome              -->      OHS Directory                         |
+|                                                        |     mwtascripts         -->      SCRIPTS Directory                     |
+|                                                        |     mwhome              -->      Home Directory                        |
+|                                                        |     domhome             -->      Domain Home Directory                 |
+|________________________________________________________|________________________________________________________________________|
+|                                                  Type "m" for Menu                                                              |
+|_________________________________________________________________________________________________________________________________|
+                                                                                                          ™shah.yash@accenture.com
+

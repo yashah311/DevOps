@@ -1,0 +1,50 @@
+# sync_fmw.yml
+
+---
+   - hosts: ALLFMW
+     vars:
+        - folders_path: /opt/oracle/teams/TA/folders
+     tasks:
+     -  name: Creating folders
+        file:
+          path: "{{ folders_path }}"
+          state: directory
+
+     -  name: Creating soft link
+        file:
+          dest: $HOME/folders
+          src: "{{ folders_path }}"
+          state: link
+
+     -  name: Synchronizing folders
+        synchronize: 
+          src: ../folders/ 
+          dest: "{{ folders_path }}"
+          delete: yes
+          recursive: true
+          
+     -  name: Decrypt and copy folders
+        copy:
+          src: ../folders/
+          dest: "{{ folders_path }}"
+          decrypt: yes
+
+#  Custom synchronization
+     -  name: Synchronizing single file
+        become: yes
+        copy:
+          dest: /etc/
+          src: ../files/motd
+     -  name: Synchronizing multiple files
+        copy: 
+          dest: $HOME
+          src: ../files/{{ item }}
+        with_items:
+          - .display
+          - .alias
+     -  name: Activating changes 
+        shell: source $HOME/.bashrc
+
+# Custom scripts can be called below
+     #-  name: Performing housekeeping
+     #   shell: sh /opt/oracle/teams/TA/ys/folders/CommonScripts/housekeeping.sh             

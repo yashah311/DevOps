@@ -1,0 +1,4 @@
+---
+- import_playbook: ./plays/sync_app1.yml
+- import_playbook: ./plays/sync_app2.yml
+- import_playbook: ./plays/sync_app3.yml

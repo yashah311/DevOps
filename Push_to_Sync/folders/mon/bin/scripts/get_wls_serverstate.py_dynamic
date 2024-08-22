@@ -1,0 +1,68 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Author: Yash Shah (shah.yash@accenture.com)
+# This python script is used to target and untarget JCA for BRM adapter on the domain specific environment using wlst
+
+import os
+import sys
+import re
+
+# Assigning inputs to the variables
+
+PROP_FILE_CONFIG = sys.argv[1]
+domain = sys.argv[2].upper()
+print ' >> Property file :', PROP_FILE_CONFIG
+print ' >> Domain Name :', domain
+
+
+# =======================================================================================
+# Utility function to find the token value from the property config file
+# =======================================================================================
+
+def findPropVal(Search_str):
+    token_list = [line for line in open(PROP_FILE_CONFIG).readlines()
+                  if Search_str in line]
+    for ln in token_list:
+        if not ln.startswith('#'):
+            start = Search_str + '='
+            end = '\n'
+            return re.search('%s(.*)%s' % (start, end), ln).group(1)
+
+# =======================================================================================
+# Utility function to fetch 
+# =======================================================================================
+
+def getwlsserverstatus(): 
+  try: 
+    servers=cmo.getServers()
+    print "-------------------------------------------------------" 
+    print "\t"+cmo.getName()+" domain status"                        
+    print "-------------------------------------------------------"  
+    for server in servers:
+        state(server.getName(),server.getType())
+    print "-------------------------------------------------------"  
+  except:
+    print "Unexpected failure"
+  finally:
+    print "Disconnecting WLST"
+    disconnect()
+
+#main
+if __name__ == 'main':
+    username = findPropVal(domain + '_ADMIN_USERNAME')
+    password = findPropVal(domain + '_ADMIN_PASSWORD')
+    host = findPropVal(domain + '_ADMIN_LISTEN_ADDRESS')
+    port = findPropVal(domain + '_ADMIN_LISTEN_PORT')
+    admin_server_url = 't3://' + host + ':' + port
+    #CLUSTER_NAME = 'soa_cluster'
+
+    # connect to the server
+
+    connect(username, password, admin_server_url)
+    #connect('weblogic','Welcome_91','t3://cpp1-fmw12c-01:7301')
+ 
+    # calling the function
+    getwlsserverstatus()
+
+

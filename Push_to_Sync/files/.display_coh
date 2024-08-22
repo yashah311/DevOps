@@ -1,0 +1,16 @@
+    _________________________________________________________________________________________________________________________________
+   |	           SCRIPTS                                  |                        OPERATE					     |
+   | statuscoh            -->     To check cluster HC       |     runsync              -->     To Run sync Tool                      |
+   | startcoh             -->     To Start Coherence        |     accountsize          -->     To Check Account size                 |
+   | stopcoh 		  -->     To Stop Coherence	    |     assetsize            -->     To Check Asset size                   |
+   |                                                        |     adddata              -->     To Add data                           |
+   |           				                    |     purgelogs            -->     To Delete logs                        |
+   |________________________________________________________|________________________________________________________________________|
+   |                LOGS                                    |                      DIRECTORIES                                       |
+   | cohlog               -->     Coherence LOG directory   |     cohloc               -->     Coherence  Home directory             |
+   |                                                        |     opsloc               -->     OPS Home directory                    |
+   |                                                        |     	              			                             |
+   |                                                        |                      				                     |
+   |________________________________________________________|________________________________________________________________________|
+   |                                                  Type "m" for Menu                                                              |
+   |_________________________________________________________________________________________________________________________________|

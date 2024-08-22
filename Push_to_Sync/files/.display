@@ -1,0 +1,40 @@
+    ____________________________________________________________________________________________________________________________
+   |           SCRIPTS                                                              OPERATE                                     |
+   | startenv   -->   To Start all domains                 | checkhc                -->   To check the runtime status for env   |
+   | stopenv    -->   To Stop all domains                  | statusrig              -->   To checks if rig-proxy is up          |
+   | startaabc  -->   To start AABC domain                 | startrig               -->   To start rig-proxy                    |
+   | stopaabc   -->   To stop AABC domain                  | stoprig                -->   To stop rig-proxy                     |
+   | starto2c   -->   To start osb domain                  | performjca             -->   To perform JCA                        |
+   | stopo2c    -->   To stop osb domain                   | performspm             -->   To perform SPM                        |
+   | startosb   -->   To start OSB domain                  | purgejfr               -->   To purge JFR logs since 2 days        |
+   | stoposb    -->   To stop OSB domain                   | purgeresq              -->   To purge resequencer for o2c and aabc |
+   | startodi   -->   To start ODI domain                  | verifypoller           -->   To check if poller is running         |
+   | stopodi    -->   To stop ODI domain                   | restartpoller          -->   To restart Poller                     |
+   | startcod   -->   To start COD domain                  | search <testdata>      -->   To search test data in all logs       |
+   | stopcod    -->   To stop COD domain                   | mailmonreport          -->   To capture, e-mail monitoring report  |
+   | cleanrestartaabc  -->  To clean restart AABC domain   | increaseseq            -->   To increase sequence post GRP rollback|
+   | cleanrestarto2c  -->  To clean restart O2C domain     | truncateaiaaggregator  -->   To purge aia entities from aggregator |
+   | cleanrestartosb  -->  To clean restart OSB domain     |                                                                    |
+   | cleanrestartodi  -->  To clean restart ODI domain     |       																|
+   | cleanrestartcod  -->  To clean restart COD domain     |																	|
+   |____________________________________________________________________________________________________________________________|
+   |            LOGS                                                                 DIRECTORIES                                |
+   | o2clogs    -->   Check o2c Admin logs                 | o2cdomain              -->   O2C Domain Home directory             |
+   | o2c1logs   -->   Check o2c soa01 logs                 | aabcdomain             -->   AABC Domain Home directory            |
+   | o2c2logs   -->   Check o2c soa02 logs                 | osbdomain              -->   OSB Domain Home directory             |
+   | aabclogs   -->   Check aabc Admin logs                | odidomain              -->   ODI Domain Home directory             |
+   | aabc1logs  -->   Check aabc soa01 logs                | coddomain              -->   COD Domain Home directory             |
+   | aabc2logs  -->   Check aabc soa02 logs                | newcologs              -->   Custom OSB NewCo logs directory       |
+   | osblogs    -->   Check osb Admin logs                 | configdir              -->   Config directory home directory       |
+   | osb1logs   -->   Check osb soa01 logs                 |                                                                    |
+   | osb2logs   -->   Check osb soa02 logs                 |                                                                    |
+   | odilogs    -->   Check osb Admin logs                 |                                                                    |
+   | odi1logs   -->   Check odi soa01 logs                 |                                                                    |
+   | odi2logs   -->   Check odi soa02 logs                 |                                                                    |
+   | cod1logs   -->   Check cod soa01 logs                 |                                                                    |
+   | cod2logs   -->   Check cod soa02 logs                 |                                                                    |
+   | codlogs    -->   Check cod Admin logs                 |                                                                    |
+   |____________________________________________________________________________________________________________________________|
+   |                                      Type "m" for Menu                                                                     |
+   |____________________________________________________________________________________________________________________________|
+                                                                                             ™shah.yash@accenture.com
