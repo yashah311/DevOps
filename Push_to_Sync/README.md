@@ -1,4 +1,5 @@
 # Push_to_Sync Architecture
+![image](https://github.com/user-attachments/assets/9d58b801-4997-411c-ac2c-56d4a90228ab)
 
 ### CURRENT SITUATION
 * DevOps team manually deploys their scripts/folders on all linux servers.
