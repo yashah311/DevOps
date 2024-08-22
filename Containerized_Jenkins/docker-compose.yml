@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+  jenkins:
+    image: my-jenkins:upgradev1.0
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false 
+      - JENKINS_USER=jenuser
+      - JENKINS_PASS=myP@ss12
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+#      - jenkins_data:/opt/docker
+      - /var/run/docker.sock:/var/run/docker.sock 
+#volumes:
+#  jenkins_data:
+#    driver: local
+#    driver_opts:
+#      type: "none"
+#      o: "bind"
+#      device: "/jenkinsdata"
