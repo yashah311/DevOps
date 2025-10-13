@@ -1,38 +1,24 @@
 FROM jenkins/jenkins:lts
-MAINTAINER Yash Shah <https://github.com/yashah311> 
+
+LABEL maintainer="Yash Shah <https://github.com/yashah311>"
 USER root
 
+# Install Docker CLI using official script
 RUN apt-get update && \
-    apt-get -y install apt-transport-https \
+    apt-get install -y \
       ca-certificates \
       curl \
       gnupg2 \
-      software-properties-common && \
-    curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
-    add-apt-repository \
-      "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-      $(lsb_release -cs) \
-      stable" && \
-   apt-get update && \
-   apt-get -y install docker-ce
+      lsb-release && \
+    curl -fsSL https://get.docker.com | sh
 
-RUN usermod -a -G docker jenkins
+RUN usermod -aG docker jenkins
 
 USER jenkins
 
-# Allows to skip Jenkins setup wizard
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+ENV JENKINS_USER=jenuser
+ENV JENKINS_PASS=myP@ss12
 
-# Update the username and password
-ENV JENKINS_USER jenuser
-ENV JENKINS_PASS myP@ss12
-
-# Copying files for custom plugin installation
-COPY plugins.txt /usr/share/jenkins/ref/
-
-# Jenkins runs all grovy files from init.groovy.d dir; Using this for creating default admin user
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 COPY default-user.groovy /usr/share/jenkins/ref/init.groovy.d/
-
-# Installing all the plugins as per plugins.txt
-RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
-
