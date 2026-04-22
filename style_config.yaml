@@ -1,0 +1,143 @@
+# ============================================================
+#  STYLE CONFIG  —  Gujarati PDF Generator  "Moodboard"
+#  Edit this file to control HOW output Gujarati is written.
+#  No Python knowledge needed — just edit the values below.
+# ============================================================
+
+# ── Paths ────────────────────────────────────────────────────
+paths:
+  input_folder:  "input"       # drop scanned PDFs here
+  output_folder: "output"      # generated PDFs land here
+  font:          "fonts/NotoSerifGujarati-Regular.ttf"
+
+# ── OCR settings ─────────────────────────────────────────────
+ocr:
+  # provider options:
+  #   "sarvam"  — Sarvam Vision (BEST for Indian scripts — Gujarati, Sanskrit, Devanagari)
+  #               Free API key: https://dashboard.sarvam.ai  (sign up with Google)
+  #               Purpose-built for Indian languages, outputs clean Markdown
+  #   "none"    — Skip separate OCR; LLM does OCR+rewrite in one vision call (default)
+  provider: "sarvam"
+  sarvam_token_env: "SARVAM_API_KEY"   # set via: $env:SARVAM_API_KEY = "..."
+  sarvam_language:  "gu-IN"            # primary language hint for OCR
+  output_format:    "md"               # markdown output (cleaner for LLM rewrite)
+
+  dpi: 200                     # used only when provider=none (LLM vision)
+  languages: "eng+guj+san"     # Tesseract legacy (unused with sarvam)
+  tesseract_path: 'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
+# ── LLM rewrite settings ─────────────────────────────────────
+llm:
+  # provider options:
+  #   "groq"    — Groq (FREE, fast, vision via Llama 4 Scout)
+  #               Sign up: https://console.groq.com  (no billing needed)
+  #   "gemini"  — Google Gemini Flash (FREE personal Google account)
+  #               Get free key: https://aistudio.google.com/apikey
+  #   "github"  — GitHub Models (personal account + fine-grained PAT with Models:Read)
+  #               Does NOT work with corporate/EMU GitHub accounts
+  #   "none"    — Google Translate only (no key, lower quality)
+  provider: "groq"
+
+  # Groq free API (OpenAI-compatible)
+  groq_token_env: "GROQ_API_KEY"       # set via: $env:GROQ_API_KEY = "gsk_..."
+  groq_model:     "meta-llama/llama-4-scout-17b-16e-instruct"  # free, has vision
+  groq_endpoint:  "https://api.groq.com/openai/v1"
+
+  # Gemini free API (OpenAI-compatible endpoint — no extra library needed)
+  gemini_token_env: "GEMINI_API_KEY"
+  gemini_model:    "gemini-2.0-flash"
+  gemini_endpoint: "https://generativelanguage.googleapis.com/v1beta/openai/"
+
+  # GitHub Models (personal account only — does NOT work with corporate EMU accounts)
+  github_token_env: "GITHUB_TOKEN"
+  model: "gpt-4o"
+  endpoint: "https://models.inference.ai.azure.com"
+
+# ── Translation style  (the default — Literal) ──────────────
+style:
+  # Tone: "conversational" | "formal" | "devotional" | "literal"
+  tone: "literal"
+
+  # Target audience: who will read this?
+  audience: "general Gujarati speaker"
+
+  # Domain: helps LLM choose the right vocabulary
+  # e.g. "religious", "legal", "educational", "historical", "medical"
+  domain: "religious / philosophical"
+
+  # Preserve these terms as-is (do not translate them)
+  preserve_terms:
+    - "આત્મા"
+    - "ધર્મ"
+    - "કર્મ"
+    - "સંસ્કાર"
+    - "ગુરુ"
+    - "મોક્ષ"
+    - "બ્રહ્મચર્ય"
+    - "શ્લોક"
+
+  # Extra instruction injected into the LLM prompt.
+  # Use this to fine-tune the style without touching Python code.
+  extra_instruction: >
+    LITERAL TRANSLATION (શબ્દ-દ-શ-શ — Accurate word-for-word Gujarati).
+    Translate EVERY word and phrase of the source into Gujarati, one-to-one.
+    Preserve the exact sentence structure, word order, and length of the original.
+    Do NOT shorten, summarise, paraphrase, simplify, or omit anything — not even
+    repetitive or redundant passages. Accuracy and completeness are paramount.
+    Each source sentence must map to exactly one Gujarati sentence; do not merge or split.
+    Retain all headings, sub-headings, paragraph breaks, lists, and tables unchanged.
+    Preserve Sanskrit/English proper nouns and technical terms in Gujarati script.
+    Use ## for section headings and ### for sub-headings.
+
+# ── Output PDF appearance ─────────────────────────────────────
+pdf:
+  font_size_body:  12
+  font_size_title: 18
+  line_spacing:    22          # leading (points) — slightly more than 1.5x for readability
+  margin_mm:       25          # Word-like margins (25mm ≈ 1 inch)
+  page_size:       "A4"        # A4 | LETTER
+
+# ── Additional translation modes ─────────────────────────────
+# Both modes use the same Sarvam OCR output, same preserve_terms,
+# and same domain as the moodboard — only the LLM instruction changes.
+# Set enabled: false to skip a mode.
+translation_modes:
+
+  # Mode #1 (default) is now the base style above — Literal.
+  # The two additional modes below are generated alongside it.
+
+  sense:
+    enabled: true
+    label: "Sense"             # used in PDF title and output file names
+    tone: "conversational"
+    audience: "general Gujarati speaker — no Sanskrit background needed"
+    extra_instruction: >
+        SENSE TRANSLATION MODE (ભાવ-અનુવાદ — Conversational meaning-based Gujarati).
+        Translate the source naturally into everyday spoken Gujarati, capturing the full
+        meaning and intent without cutting content — but you may rephrase, reorder sentences,
+        and choose more natural Gujarati equivalents where the literal wording would sound stiff.
+        Do NOT summarise or omit content. Every idea in the source must appear in the output.
+        The output may be slightly shorter or longer than the source as natural Gujarati requires,
+        but nothing should be dropped or condensed beyond what natural phrasing demands.
+        Write conversationally — as you would explain it warmly to an educated Gujarati friend.
+        Avoid archaic or Sanskritised vocabulary. Use ## for section headings, ### for sub-headings.
+        If a Sanskrit shloka appears, give its plain Gujarati meaning first, then the shloka
+        in Devanagari on a new line.
+
+  summary:
+    enabled: true
+    label: "Summary"           # used in PDF title and output file names
+    tone: "conversational"
+    audience: "general Gujarati speaker — no Sanskrit background needed"
+    extra_instruction: >
+        SUMMARY MODE — Write a concise Gujarati summary of each section.
+        Distil the essential point of each paragraph into as few clear sentences as possible.
+        Omit elaborations, repetition, and examples unless they are the main point.
+        Use plain everyday Gujarati. No Sanskritised vocabulary.
+        Headings must be in Gujarati. Use ## for section headings, ### for sub-headings.
+        Each section's output should be noticeably shorter than the source.
+
+# ── Processing limits ─────────────────────────────────────────
+limits:
+  max_pages:    60             # cap pages per PDF (raise if needed)
+  chunk_size:   4000           # max chars per LLM/translate call

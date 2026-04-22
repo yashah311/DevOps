@@ -1,0 +1,32 @@
+# ── User data — never commit ──────────────────────────────────
+input/
+output/
+
+# ── API keys ─────────────────────────────────────────────────
+.env
+*.env
+
+# ── Python cache ─────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+
+# ── PDFs (input scans + generated outputs) ───────────────────
+*.pdf
+
+# ── Checkpoint / translation cache ───────────────────────────
+*.checkpoint.json
+*_gujarati.txt
+*_sarvam_ocr.md
+
+# ── Logs ─────────────────────────────────────────────────────
+*.log
+run_log.txt
+
+# ── OS / editor ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+*.swp

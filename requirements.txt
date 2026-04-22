@@ -1,0 +1,26 @@
+# Core PDF processing
+PyMuPDF>=1.27.2
+
+# Image handling
+Pillow>=12.2.0
+
+# LLM API (Groq / Gemini / GitHub Models all use OpenAI-compatible client)
+openai>=2.31.0
+
+# Config parsing
+PyYAML>=6.0.1
+
+# PDF rendering (fallback path, may be unused if Playwright is primary renderer)
+reportlab>=4.4.10
+
+# Markdown → HTML for Playwright-based PDF rendering
+Markdown>=3.10.2
+
+# Headless Chromium PDF renderer
+playwright>=1.58.0
+
+# Sarvam OCR (optional — only needed when ocr.provider = "sarvam" in style_config.yaml)
+sarvamai>=0.1.27
+
+# ── After installing, run once to download Chromium: ──
+#   playwright install chromium
