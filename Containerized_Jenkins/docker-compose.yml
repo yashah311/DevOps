@@ -1,21 +1,48 @@
-version: '3.7'
 services:
   jenkins:
+    build:
+      context: ./build
     image: my-jenkins:upgradev1.0
+    container_name: jenkins
+    restart: unless-stopped
+
+    expose:
+      - "9090"
+
     environment:
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false 
-      - JENKINS_USER=jenuser
-      - JENKINS_PASS=myP@ss12
-    ports:
-      - 8080:8080
-      - 50000:50000
+      JAVA_OPTS: "-Djenkins.install.runSetupWizard=false"
+      JENKINS_OPTS: "--httpPort=9090"
+      JENKINS_USER: "jenuser"
+      JENKINS_PASS: "myP@ss12"
+
     volumes:
-#      - jenkins_data:/opt/docker
-      - /var/run/docker.sock:/var/run/docker.sock 
-#volumes:
-#  jenkins_data:
-#    driver: local
-#    driver_opts:
-#      type: "none"
-#      o: "bind"
-#      device: "/jenkinsdata"
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    user: root
+
+    networks:
+      - jenkins_net
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+    depends_on:
+      - jenkins
+
+    networks:
+      - jenkins_net
+
+volumes:
+  jenkins_data:
+
+networks:
+  jenkins_net:

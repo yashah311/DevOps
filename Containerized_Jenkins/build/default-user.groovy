@@ -2,11 +2,17 @@ import jenkins.model.*
 import hudson.security.*
 
 def env = System.getenv()
-def jenkins = Jenkins.getInstance()
-if(!(jenkins.getSecurityRealm() instanceof HudsonPrivateSecurityRealm))
-    jenkins.setSecurityRealm(new HudsonPrivateSecurityRealm(false))
 
-// Use default authorization strategy
-def user = jenkins.getSecurityRealm().createAccount(env.JENKINS_USER, env.JENKINS_PASS)
-user.save()
-jenkins.save()
+def username = env.JENKINS_USER ?: "admin"
+def password = env.JENKINS_PASS ?: "admin"
+
+def instance = Jenkins.get()
+
+def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+hudsonRealm.createAccount(username, password)
+instance.setSecurityRealm(hudsonRealm)
+
+// Optional: full access to logged-in users
+instance.setAuthorizationStrategy(new FullControlOnceLoggedInAuthorizationStrategy())
+
+instance.save()
